@@ -1,12 +1,10 @@
 ﻿using System;
-using CSharpMongoGraphqlSubscriptions.Models;
 using CSharpMongoGraphqlSubscriptions.Models.CategoryModels;
 using CSharpMongoGraphqlSubscriptions.Models.GaugeValueModels;
 using CSharpMongoGraphqlSubscriptions.Models.TogglerValueModels;
-using CSharpMongoGraphqlSubscriptions.Schema;
 using CSharpMongoGraphqlSubscriptions.Schema.Mutations;
+using CSharpMongoGraphqlSubscriptions.Schema.Queries;
 using CSharpMongoGraphqlSubscriptions.Schema.Subscriptions;
-using CSharpMongoGraphqlSubscriptions.Utilities;
 using HotChocolate.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,7 +13,6 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Core.Events;
 using StackExchange.Redis;
-using Query = CSharpMongoGraphqlSubscriptions.Schema.Queries.Query;
 
 namespace CSharpMongoGraphqlSubscriptions
 {
@@ -25,7 +22,7 @@ namespace CSharpMongoGraphqlSubscriptions
         {
             services
                 .AddInMemorySubscriptions()
-                .AddRedisSubscriptions(sp => ConnectionMultiplexer.Connect("localhost:6379"));
+                .AddRedisSubscriptions(_ => ConnectionMultiplexer.Connect("localhost:6379"));
             
             services
                 .AddGraphQLServer()

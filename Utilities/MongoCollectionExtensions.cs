@@ -1,7 +1,5 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CSharpMongoGraphqlSubscriptions.Models;
-using CSharpMongoGraphqlSubscriptions.Models.CategoryModels;
 using MongoDB.Driver;
 
 namespace CSharpMongoGraphqlSubscriptions.Utilities

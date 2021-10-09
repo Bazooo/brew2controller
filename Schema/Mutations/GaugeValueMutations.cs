@@ -1,7 +1,6 @@
 ﻿// ReSharper disable UnusedMember.Global
 
 using System.Threading.Tasks;
-using CSharpMongoGraphqlSubscriptions.Models;
 using CSharpMongoGraphqlSubscriptions.Models.GaugeValueModels;
 using CSharpMongoGraphqlSubscriptions.Schema.Subscriptions;
 using HotChocolate;

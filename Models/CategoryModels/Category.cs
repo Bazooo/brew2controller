@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using CSharpMongoGraphqlSubscriptions.Models.SubcategoryModels;
-using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace CSharpMongoGraphqlSubscriptions.Models.CategoryModels

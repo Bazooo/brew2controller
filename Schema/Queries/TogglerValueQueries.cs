@@ -1,6 +1,5 @@
 ﻿// ReSharper disable UnusedMember.Global
 
-using CSharpMongoGraphqlSubscriptions.Models;
 using CSharpMongoGraphqlSubscriptions.Models.TogglerValueModels;
 
 namespace CSharpMongoGraphqlSubscriptions.Schema.Queries
