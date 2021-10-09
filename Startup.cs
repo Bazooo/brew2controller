@@ -1,7 +1,4 @@
 ﻿using System;
-using CSharpMongoGraphqlSubscriptions.Models.CategoryModels;
-using CSharpMongoGraphqlSubscriptions.Models.GaugeValueModels;
-using CSharpMongoGraphqlSubscriptions.Models.TogglerValueModels;
 using CSharpMongoGraphqlSubscriptions.Schema;
 using HotChocolate.AspNetCore;
 using Microsoft.AspNetCore.Builder;
@@ -28,6 +25,8 @@ namespace CSharpMongoGraphqlSubscriptions
                 .AddMutationType<Mutation>()
                 .AddSubscriptionType<Subscription>()
                 .AddMongoDbProjections();
+
+            // setup the database
 
             const string connectionString = "mongodb://root:pass@localhost";
             var mongoConnectionUrl = new MongoUrl(connectionString);

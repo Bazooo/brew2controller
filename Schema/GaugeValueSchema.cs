@@ -10,13 +10,9 @@ using HotChocolate.Types;
 
 namespace CSharpMongoGraphqlSubscriptions.Schema
 {
-    public partial class Query
-    {
-    }
-
     public partial class Mutation
     {
-        public async Task<GaugeValue> AddGaugeValue(string gaugeId, double value, [Service] ITopicEventSender sender)
+        public async Task<GaugeValue> AddGaugeValue(string gaugeId, double value)
         {
             var gaugeValue = new GaugeValue
             {
@@ -27,7 +23,7 @@ namespace CSharpMongoGraphqlSubscriptions.Schema
             var topic = $"{gaugeId}_{nameof(Subscription.LatestGaugeValue)}";
 
             await this._database.GetGaugeValuesCollection().InsertOneAsync(gaugeValue);
-            await sender.SendAsync(topic, gaugeValue);
+            await this._sender.SendAsync(topic, gaugeValue);
 
             return gaugeValue;
         }
@@ -36,10 +32,10 @@ namespace CSharpMongoGraphqlSubscriptions.Schema
     public partial class Subscription
     {
         [SubscribeAndResolve]
-        public ValueTask<ISourceStream<GaugeValue>> LatestGaugeValue(string gaugeId, [Service] ITopicEventReceiver receiver)
+        public ValueTask<ISourceStream<GaugeValue>> LatestGaugeValue(string gaugeId)
         {
             var topic = $"{gaugeId}_{nameof(this.LatestGaugeValue)}";
-            return receiver.SubscribeAsync<string, GaugeValue>(topic);
+            return this._receiver.SubscribeAsync<string, GaugeValue>(topic);
         }
     }
 }
