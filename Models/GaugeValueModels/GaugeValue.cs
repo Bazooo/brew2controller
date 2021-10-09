@@ -7,8 +7,7 @@ namespace CSharpMongoGraphqlSubscriptions.Models.GaugeValueModels
     {
         public double Value { get; set; }
 
-
         [BsonRepresentation(BsonType.ObjectId)]
-        public string GaugeId { get; set; } = null!;
+        public string GaugeId { get; init; } = null!;
     }
 }

@@ -27,7 +27,6 @@ namespace CSharpMongoGraphqlSubscriptions.Models.GaugeModels
         
         // references
 
-
         [BsonRepresentation(BsonType.ObjectId)]
         public string SubcategoryId { get; set; } = null!;
 

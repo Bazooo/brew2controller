@@ -7,6 +7,6 @@ namespace CSharpMongoGraphqlSubscriptions.Models
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; } = null!;
+        public string Id { get; init; } = null!;
     }
 }

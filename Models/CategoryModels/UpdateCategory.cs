@@ -7,7 +7,7 @@
         public string Name { get; set; } = null!;
 
         public string Color { get; set; } = null!;
-        
+
         public int Rank { get; set; }
     }
 
@@ -15,10 +15,10 @@
     {
         public Category(UpdateCategory updateCategory)
         {
-            Id = updateCategory.Id;
-            Name = updateCategory.Name;
-            Color = updateCategory.Color;
-            Rank = updateCategory.Rank;
+            this.Id = updateCategory.Id;
+            this.Name = updateCategory.Name;
+            this.Color = updateCategory.Color;
+            this.Rank = updateCategory.Rank;
         }
     }
 }

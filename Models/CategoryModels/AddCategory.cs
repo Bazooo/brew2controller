@@ -5,7 +5,7 @@
         public string Name { get; set; } = null!;
 
         public string Color { get; set; } = null!;
-        
+
         public int Rank { get; set; }
     }
 
@@ -13,9 +13,9 @@
     {
         public Category(AddCategory addCategory)
         {
-            Name = addCategory.Name;
-            Color = addCategory.Color;
-            Rank = addCategory.Rank;
+            this.Name = addCategory.Name;
+            this.Color = addCategory.Color;
+            this.Rank = addCategory.Rank;
         }
     }
 }

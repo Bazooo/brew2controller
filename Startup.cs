@@ -2,9 +2,7 @@
 using CSharpMongoGraphqlSubscriptions.Models.CategoryModels;
 using CSharpMongoGraphqlSubscriptions.Models.GaugeValueModels;
 using CSharpMongoGraphqlSubscriptions.Models.TogglerValueModels;
-using CSharpMongoGraphqlSubscriptions.Schema.Mutations;
-using CSharpMongoGraphqlSubscriptions.Schema.Queries;
-using CSharpMongoGraphqlSubscriptions.Schema.Subscriptions;
+using CSharpMongoGraphqlSubscriptions.Schema;
 using HotChocolate.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,7 +21,7 @@ namespace CSharpMongoGraphqlSubscriptions
             services
                 .AddInMemorySubscriptions()
                 .AddRedisSubscriptions(_ => ConnectionMultiplexer.Connect("localhost:6379"));
-            
+
             services
                 .AddGraphQLServer()
                 .AddQueryType<Query>()
@@ -42,15 +40,15 @@ namespace CSharpMongoGraphqlSubscriptions
                     Console.WriteLine($"{e.CommandName} - {e.Command.ToJson()}");
                 });
             };
-            var client = new MongoClient(mongoClientSettings);
-            var database = client.GetDatabase("brewdb");
 
-            services
-                .AddSingleton(database.GetCollection<Category>("category"))
-                .AddSingleton(database.GetCollection<GaugeValue>("gauge_values"))
-                .AddSingleton(database.GetCollection<TogglerValue>("toggler_values"));
+            services.AddSingleton(_ =>
+            {
+                var client = new MongoClient(mongoClientSettings);
+                var database = client.GetDatabase("brewdb");
+                return database;
+            });
         }
-        
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app

@@ -2,7 +2,7 @@
 
 using CSharpMongoGraphqlSubscriptions.Models.TogglerValueModels;
 
-namespace CSharpMongoGraphqlSubscriptions.Schema.Queries
+namespace CSharpMongoGraphqlSubscriptions.Schema
 {
     public partial class Query
     {
@@ -13,5 +13,15 @@ namespace CSharpMongoGraphqlSubscriptions.Schema.Queries
                 Status = TogglerStatus.Error,
             };
         }
+    }
+
+    public partial class Mutation
+    {
+
+    }
+
+    public partial class Subscription
+    {
+
     }
 }
