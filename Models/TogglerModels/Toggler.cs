@@ -33,14 +33,11 @@ namespace CSharpMongoGraphqlSubscriptions.Models.TogglerModels
         public async Task<IEnumerable<TogglerValue>> GetValues([Service] IMongoDatabase database)
         {
             var filter = Builders<TogglerValue>.Filter.Eq("TogglerId", this.Id);
-            var values = await database.GetTogglerValuesCollection().FindAsync(filter);
-
-            if (values != null)
-            {
-                return new List<TogglerValue>();
-            }
-
-            var togglerValues = await values.ToListAsync();
+            var togglerValues = await database
+                .GetTogglerValuesCollection()
+                .Find(filter)
+                .SortBy(bson => bson.Id)
+                .ToListAsync();
 
             return togglerValues ?? new List<TogglerValue>();
         }

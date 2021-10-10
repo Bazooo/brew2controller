@@ -22,7 +22,7 @@ namespace CSharpMongoGraphqlSubscriptions.Models.CategoryModels
             var filter = Builders<Subcategory>.Filter.Eq("CategoryId", this.Id);
             var values = await database.GetSubcategoriesCollection().FindAsync(filter);
 
-            if (values != null)
+            if (values == null)
             {
                 return new List<Subcategory>();
             }

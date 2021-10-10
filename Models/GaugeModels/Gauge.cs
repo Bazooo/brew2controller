@@ -35,14 +35,11 @@ namespace CSharpMongoGraphqlSubscriptions.Models.GaugeModels
         public async Task<IEnumerable<GaugeValue>> GetValues([Service] IMongoDatabase database)
         {
             var filter = Builders<GaugeValue>.Filter.Eq("GaugeId", this.Id);
-            var values = await database.GetGaugeValuesCollection().FindAsync(filter);
-
-            if (values != null)
-            {
-                return new List<GaugeValue>();
-            }
-
-            var gaugeValues = await values.ToListAsync();
+            var gaugeValues = await database
+                .GetGaugeValuesCollection()
+                .Find(filter)
+                .SortBy(bson => bson.Id)
+                .ToListAsync();
 
             return gaugeValues ?? new List<GaugeValue>();
         }
