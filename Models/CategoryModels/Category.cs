@@ -17,10 +17,16 @@ namespace CSharpMongoGraphqlSubscriptions.Models.CategoryModels
 
         public int Rank { get; set; }
 
-        public async Task<IEnumerable<Subcategory>> GetSubcategories([Parent] Category category, [Service] IMongoDatabase database)
+        public async Task<IEnumerable<Subcategory>> GetSubcategories([Service] IMongoDatabase database)
         {
-            var filter = Builders<Subcategory>.Filter.Eq("CategoryId", category.Id);
+            var filter = Builders<Subcategory>.Filter.Eq("CategoryId", this.Id);
             var values = await database.GetSubcategoriesCollection().FindAsync(filter);
+
+            if (values != null)
+            {
+                return new List<Subcategory>();
+            }
+
             var subcategories = await values.ToListAsync();
 
             return subcategories ?? new List<Subcategory>();

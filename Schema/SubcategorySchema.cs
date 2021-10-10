@@ -14,8 +14,8 @@ namespace CSharpMongoGraphqlSubscriptions.Schema
         public async Task<IEnumerable<Subcategory>> GetSubcategories(string? categoryId)
         {
             var filter = categoryId != null
-                ? Builders<Subcategory>.Filter.Empty
-                : Builders<Subcategory>.Filter.Eq("CategoryId", categoryId);
+                ? Builders<Subcategory>.Filter.Eq("CategoryId", categoryId)
+                : Builders<Subcategory>.Filter.Empty;
 
             var result = await this._database.GetSubcategoriesCollection().FindAsync(filter);
 
