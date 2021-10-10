@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using CSharpMongoGraphqlSubscriptions.Schema;
 using HotChocolate.AspNetCore;
 using Microsoft.AspNetCore.Builder;
@@ -47,8 +47,7 @@ namespace CSharpMongoGraphqlSubscriptions
             });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) =>
             app
                 .UseRouting()
                 .UseWebSockets()
@@ -62,6 +61,5 @@ namespace CSharpMongoGraphqlSubscriptions
                         },
                     });
                 });
-        }
     }
 }

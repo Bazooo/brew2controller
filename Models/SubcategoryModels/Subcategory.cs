@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CSharpMongoGraphqlSubscriptions.Models.CategoryModels;
@@ -12,7 +12,7 @@ using MongoDB.Driver;
 
 namespace CSharpMongoGraphqlSubscriptions.Models.SubcategoryModels
 {
-    public partial class Subcategory: MongoCollectionItem
+    public partial class Subcategory : MongoCollectionItem
     {
         public string Name { get; set; } = null!;
 
@@ -23,8 +23,8 @@ namespace CSharpMongoGraphqlSubscriptions.Models.SubcategoryModels
         [BsonRepresentation(BsonType.ObjectId)]
         public string CategoryId { get; set; } = null!;
 
-        public async Task<Category> GetCategory([Service] IMongoDatabase database)
-            => await database.GetCategoriesCollection().FindItemAsync(this.CategoryId);
+        public async Task<Category> GetCategory([Service] IMongoDatabase database) =>
+            await database.GetCategoriesCollection().FindItemAsync(this.CategoryId);
 
         [BsonIgnore]
         public IEnumerable<Toggler> Togglers { get; set; } = Array.Empty<Toggler>();

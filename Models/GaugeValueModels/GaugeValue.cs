@@ -1,9 +1,9 @@
-﻿using MongoDB.Bson;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace CSharpMongoGraphqlSubscriptions.Models.GaugeValueModels
 {
-    public class GaugeValue: MongoCollectionItem
+    public class GaugeValue : MongoCollectionItem
     {
         public double Value { get; set; }
 

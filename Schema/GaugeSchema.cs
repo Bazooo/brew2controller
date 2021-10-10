@@ -1,4 +1,4 @@
-﻿// ReSharper disable UnusedMember.Global
+// ReSharper disable UnusedMember.Global
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -22,8 +22,8 @@ namespace CSharpMongoGraphqlSubscriptions.Schema
             return await result.ToListAsync();
         }
 
-        public async Task<Gauge> GetGauge(string gaugeId)
-            => await this._database.GetGaugesCollection().FindItemAsync(gaugeId);
+        public async Task<Gauge> GetGauge(string gaugeId) =>
+            await this._database.GetGaugesCollection().FindItemAsync(gaugeId);
     }
 
     public partial class Mutation
@@ -42,7 +42,7 @@ namespace CSharpMongoGraphqlSubscriptions.Schema
             return gauge;
         }
 
-        public async Task<OperationResult> DeleteGauge(string gaugeId)
-            => await this._database.GetGaugesCollection().DeleteItemAsync(gaugeId);
+        public async Task<OperationResult> DeleteGauge(string gaugeId) =>
+            await this._database.GetGaugesCollection().DeleteItemAsync(gaugeId);
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace CSharpMongoGraphqlSubscriptions.Models
+namespace CSharpMongoGraphqlSubscriptions.Models
 {
     public class OperationResult
     {

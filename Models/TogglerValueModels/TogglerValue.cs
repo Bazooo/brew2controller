@@ -1,12 +1,12 @@
-﻿using MongoDB.Bson;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace CSharpMongoGraphqlSubscriptions.Models.TogglerValueModels
 {
-    public class TogglerValue: MongoCollectionItem
+    public class TogglerValue : MongoCollectionItem
     {
         public TogglerStatus Status { get; set; }
-        
+
         // references
 
         [BsonRepresentation(BsonType.ObjectId)]

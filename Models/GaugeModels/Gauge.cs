@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CSharpMongoGraphqlSubscriptions.Models.GaugeValueModels;
 using CSharpMongoGraphqlSubscriptions.Models.SubcategoryModels;
@@ -10,7 +10,7 @@ using MongoDB.Driver;
 
 namespace CSharpMongoGraphqlSubscriptions.Models.GaugeModels
 {
-    public partial class Gauge: MongoCollectionItem
+    public partial class Gauge : MongoCollectionItem
     {
         public string PhysicalId { get; set; } = null!;
 
@@ -29,8 +29,8 @@ namespace CSharpMongoGraphqlSubscriptions.Models.GaugeModels
         [BsonRepresentation(BsonType.ObjectId)]
         public string SubcategoryId { get; set; } = null!;
 
-        public async Task<Subcategory> GetSubcategory([Service] IMongoDatabase database)
-            => await database.GetSubcategoriesCollection().FindItemAsync(this.SubcategoryId);
+        public async Task<Subcategory> GetSubcategory([Service] IMongoDatabase database) =>
+            await database.GetSubcategoriesCollection().FindItemAsync(this.SubcategoryId);
 
         public async Task<IEnumerable<GaugeValue>> GetValues([Service] IMongoDatabase database)
         {

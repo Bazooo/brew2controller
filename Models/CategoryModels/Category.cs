@@ -1,4 +1,4 @@
-﻿// ReSharper disable UnusedMember.Global
+// ReSharper disable UnusedMember.Global
 
 using System.Collections.Generic;
 using System.Threading.Tasks;

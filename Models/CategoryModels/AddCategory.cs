@@ -1,4 +1,4 @@
-﻿namespace CSharpMongoGraphqlSubscriptions.Models.CategoryModels
+namespace CSharpMongoGraphqlSubscriptions.Models.CategoryModels
 {
     public class AddCategory
     {

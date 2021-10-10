@@ -1,4 +1,4 @@
-﻿namespace CSharpMongoGraphqlSubscriptions.Models.SubcategoryModels
+namespace CSharpMongoGraphqlSubscriptions.Models.SubcategoryModels
 {
     public class UpdateSubcategory
     {

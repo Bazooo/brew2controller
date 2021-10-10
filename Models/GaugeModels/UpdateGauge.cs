@@ -1,4 +1,4 @@
-﻿namespace CSharpMongoGraphqlSubscriptions.Models.GaugeModels
+namespace CSharpMongoGraphqlSubscriptions.Models.GaugeModels
 {
     public class UpdateGauge
     {

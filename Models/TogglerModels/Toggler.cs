@@ -1,29 +1,48 @@
-﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using CSharpMongoGraphqlSubscriptions.Models.SubcategoryModels;
 using CSharpMongoGraphqlSubscriptions.Models.TogglerValueModels;
+using CSharpMongoGraphqlSubscriptions.Utilities;
+using HotChocolate;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Driver;
 
 namespace CSharpMongoGraphqlSubscriptions.Models.TogglerModels
 {
-    public class Toggler: MongoCollectionItem
+    public partial class Toggler : MongoCollectionItem
     {
         public string PhysicalId { get; set; } = null!;
-        
+
         public string Name { get; set; } = null!;
 
         public string Description { get; set; } = null!;
-        
+
         public bool Interactive { get; set; }
-        
+
         public int Rank { get; set; }
-        
+
         // references
 
         [BsonRepresentation(BsonType.ObjectId)]
         public string SubcategoryId { get; set; } = null!;
 
-        [BsonIgnore]
-        public IEnumerable<TogglerValue> Values { get; set; } = Array.Empty<TogglerValue>();
+        public async Task<Subcategory> GetSubcategory([Service] IMongoDatabase database) =>
+            await database.GetSubcategoriesCollection().FindItemAsync(this.SubcategoryId);
+
+        public async Task<IEnumerable<TogglerValue>> GetValues([Service] IMongoDatabase database)
+        {
+            var filter = Builders<TogglerValue>.Filter.Eq("TogglerId", this.Id);
+            var values = await database.GetTogglerValuesCollection().FindAsync(filter);
+
+            if (values != null)
+            {
+                return new List<TogglerValue>();
+            }
+
+            var togglerValues = await values.ToListAsync();
+
+            return togglerValues ?? new List<TogglerValue>();
+        }
     }
 }

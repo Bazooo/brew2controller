@@ -1,8 +1,8 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace CSharpMongoGraphqlSubscriptions.Models.LogModels
 {
-    public class Log: MongoCollectionItem
+    public class Log : MongoCollectionItem
     {
         public LogType Type { get; set; }
 

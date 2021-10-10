@@ -1,4 +1,4 @@
-﻿// ReSharper disable UnusedMember.Global
+// ReSharper disable UnusedMember.Global
 
 using HotChocolate.Subscriptions;
 using MongoDB.Driver;
@@ -26,13 +26,8 @@ namespace CSharpMongoGraphqlSubscriptions.Schema
 
     public partial class Subscription
     {
-        private readonly IMongoDatabase _database;
         private readonly ITopicEventReceiver _receiver;
 
-        public Subscription(IMongoDatabase database, ITopicEventReceiver receiver)
-        {
-            this._database = database;
-            this._receiver = receiver;
-        }
+        public Subscription(ITopicEventReceiver receiver) => this._receiver = receiver;
     }
 }

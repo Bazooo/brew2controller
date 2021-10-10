@@ -1,4 +1,4 @@
-﻿// ReSharper disable UnusedMember.Global
+// ReSharper disable UnusedMember.Global
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -21,8 +21,8 @@ namespace CSharpMongoGraphqlSubscriptions.Schema
             return categories;
         }
 
-        public async Task<Category> GetCategory(string categoryId)
-            => await this._database.GetCategoriesCollection().FindItemAsync(categoryId);
+        public async Task<Category> GetCategory(string categoryId) =>
+            await this._database.GetCategoriesCollection().FindItemAsync(categoryId);
     }
 
     public partial class Mutation
