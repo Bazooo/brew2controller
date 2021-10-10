@@ -23,8 +23,7 @@ namespace CSharpMongoGraphqlSubscriptions
                 .AddGraphQLServer()
                 .AddQueryType<Query>()
                 .AddMutationType<Mutation>()
-                .AddSubscriptionType<Subscription>()
-                .AddMongoDbProjections();
+                .AddSubscriptionType<Subscription>();
 
             // setup the database
 

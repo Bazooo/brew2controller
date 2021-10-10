@@ -16,8 +16,13 @@ namespace CSharpMongoGraphqlSubscriptions.Schema
             var filter = Builders<Category>.Filter.Empty;
             var result = await this._database.GetCategoriesCollection().FindAsync(filter);
 
-            return await result.ToListAsync();
+            var categories = await result.ToListAsync();
+
+            return categories;
         }
+
+        public async Task<Category> Category(string categoryId)
+            => await this._database.GetCategoriesCollection().FindItemAsync(categoryId);
     }
 
     public partial class Mutation
@@ -37,18 +42,6 @@ namespace CSharpMongoGraphqlSubscriptions.Schema
         }
 
         public async Task<OperationResult> DeleteCategory(string categoryId)
-        {
-            var filter = Builders<Category>.Filter.Eq("Id", categoryId);
-            await this._database.GetCategoriesCollection().DeleteOneAsync(filter);
-            return new OperationResult
-            {
-                Worked = true,
-            };
-        }
-    }
-
-    public partial class Subscription
-    {
-
+            => await this._database.GetCategoriesCollection().DeleteItemAsync(categoryId);
     }
 }

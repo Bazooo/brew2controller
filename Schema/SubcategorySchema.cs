@@ -1,0 +1,42 @@
+﻿// ReSharper disable UnusedMember.Global
+
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using CSharpMongoGraphqlSubscriptions.Models;
+using CSharpMongoGraphqlSubscriptions.Models.SubcategoryModels;
+using CSharpMongoGraphqlSubscriptions.Utilities;
+using MongoDB.Driver;
+
+namespace CSharpMongoGraphqlSubscriptions.Schema
+{
+    public partial class Query
+    {
+        public async Task<IEnumerable<Subcategory>> Subcategories()
+        {
+            var filter = Builders<Subcategory>.Filter.Empty;
+            var result = await this._database.GetSubcategoriesCollection().FindAsync(filter);
+
+            return await result.ToListAsync();
+        }
+    }
+
+    public partial class Mutation
+    {
+        public async Task<Subcategory> AddSubcategory(AddSubcategory newSubcategory)
+        {
+            var subcategory = new Subcategory(newSubcategory);
+            await this._database.GetSubcategoriesCollection().InsertOneAsync(subcategory);
+            return subcategory;
+        }
+
+        public async Task<Subcategory> UpdateSubcategory(UpdateSubcategory updatedSubcategory)
+        {
+            var subcategory = new Subcategory(updatedSubcategory);
+            await this._database.GetSubcategoriesCollection().UpdateItemAsync(subcategory);
+            return subcategory;
+        }
+
+        public async Task<OperationResult> DeleteSubcategory(string subcategoryId)
+            => await this._database.GetSubcategoriesCollection().DeleteItemAsync(subcategoryId);
+    }
+}
