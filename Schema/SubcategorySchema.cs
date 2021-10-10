@@ -11,13 +11,19 @@ namespace CSharpMongoGraphqlSubscriptions.Schema
 {
     public partial class Query
     {
-        public async Task<IEnumerable<Subcategory>> Subcategories()
+        public async Task<IEnumerable<Subcategory>> GetSubcategories(string? categoryId)
         {
-            var filter = Builders<Subcategory>.Filter.Empty;
+            var filter = categoryId != null
+                ? Builders<Subcategory>.Filter.Empty
+                : Builders<Subcategory>.Filter.Eq("CategoryId", categoryId);
+
             var result = await this._database.GetSubcategoriesCollection().FindAsync(filter);
 
             return await result.ToListAsync();
         }
+
+        public async Task<Subcategory> GetSubcategory(string subcategoryId)
+            => await this._database.GetSubcategoriesCollection().FindItemAsync(subcategoryId);
     }
 
     public partial class Mutation

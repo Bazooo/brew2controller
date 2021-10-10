@@ -3,9 +3,7 @@
 using System.Threading.Tasks;
 using CSharpMongoGraphqlSubscriptions.Models.GaugeValueModels;
 using CSharpMongoGraphqlSubscriptions.Utilities;
-using HotChocolate;
 using HotChocolate.Execution;
-using HotChocolate.Subscriptions;
 using HotChocolate.Types;
 
 namespace CSharpMongoGraphqlSubscriptions.Schema
@@ -20,7 +18,7 @@ namespace CSharpMongoGraphqlSubscriptions.Schema
                 Value = value,
             };
 
-            var topic = $"{gaugeId}_{nameof(Subscription.LatestGaugeValue)}";
+            var topic = $"{gaugeId}_{nameof(Subscription.GetLatestGaugeValue)}";
 
             await this._database.GetGaugeValuesCollection().InsertOneAsync(gaugeValue);
             await this._sender.SendAsync(topic, gaugeValue);
@@ -32,9 +30,9 @@ namespace CSharpMongoGraphqlSubscriptions.Schema
     public partial class Subscription
     {
         [SubscribeAndResolve]
-        public ValueTask<ISourceStream<GaugeValue>> LatestGaugeValue(string gaugeId)
+        public ValueTask<ISourceStream<GaugeValue>> GetLatestGaugeValue(string gaugeId)
         {
-            var topic = $"{gaugeId}_{nameof(this.LatestGaugeValue)}";
+            var topic = $"{gaugeId}_{nameof(this.GetLatestGaugeValue)}";
             return this._receiver.SubscribeAsync<string, GaugeValue>(topic);
         }
     }

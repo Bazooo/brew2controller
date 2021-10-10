@@ -11,7 +11,7 @@ namespace CSharpMongoGraphqlSubscriptions.Schema
 {
     public partial class Query
     {
-        public async Task<IEnumerable<Category>> Categories()
+        public async Task<IEnumerable<Category>> GetCategories()
         {
             var filter = Builders<Category>.Filter.Empty;
             var result = await this._database.GetCategoriesCollection().FindAsync(filter);
@@ -21,7 +21,7 @@ namespace CSharpMongoGraphqlSubscriptions.Schema
             return categories;
         }
 
-        public async Task<Category> Category(string categoryId)
+        public async Task<Category> GetCategory(string categoryId)
             => await this._database.GetCategoriesCollection().FindItemAsync(categoryId);
     }
 
