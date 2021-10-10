@@ -1,5 +1,6 @@
 // ReSharper disable UnusedMember.Global
 
+using CSharpMongoGraphqlSubscriptions.Utilities;
 using HotChocolate.Subscriptions;
 using MongoDB.Driver;
 
@@ -16,11 +17,13 @@ namespace CSharpMongoGraphqlSubscriptions.Schema
     {
         private readonly IMongoDatabase _database;
         private readonly ITopicEventSender _sender;
+        private readonly BrewLogger _brewLogger;
 
-        public Mutation(IMongoDatabase database, ITopicEventSender sender)
+        public Mutation(IMongoDatabase database, ITopicEventSender sender, BrewLogger brewLogger)
         {
             this._database = database;
             this._sender = sender;
+            this._brewLogger = brewLogger;
         }
     }
 

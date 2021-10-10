@@ -22,6 +22,8 @@ namespace CSharpMongoGraphqlSubscriptions.Schema
 
             await this._database.GetTogglerValuesCollection().InsertOneAsync(togglerValue);
             await this._sender.SendAsync(topic, togglerValue);
+            var toggler = await this._database.GetTogglersCollection().FindItemAsync(togglerValue.TogglerId);
+            await this._brewLogger.AddUpdateLog($"Updated toggler {toggler.Name} status: {togglerValue.Status}");
 
             return togglerValue;
         }

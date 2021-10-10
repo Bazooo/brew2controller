@@ -32,6 +32,8 @@ namespace CSharpMongoGraphqlSubscriptions.Schema
         {
             var toggler = new Toggler(newToggler);
             await this._database.GetTogglersCollection().InsertOneAsync(toggler);
+            await this._brewLogger.AddUpdateLog($"New toggler added: {toggler.Name}");
+
             return toggler;
         }
 
@@ -39,6 +41,8 @@ namespace CSharpMongoGraphqlSubscriptions.Schema
         {
             var toggler = new Toggler(updatedToggler);
             await this._database.GetTogglersCollection().UpdateItemAsync(toggler);
+            await this._brewLogger.AddUpdateLog($"Toggler updated: {toggler.Name}");
+
             return toggler;
         }
 

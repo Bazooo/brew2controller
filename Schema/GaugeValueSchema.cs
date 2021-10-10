@@ -22,6 +22,8 @@ namespace CSharpMongoGraphqlSubscriptions.Schema
 
             await this._database.GetGaugeValuesCollection().InsertOneAsync(gaugeValue);
             await this._sender.SendAsync(topic, gaugeValue);
+            var gauge = await this._database.GetGaugesCollection().FindItemAsync(gaugeValue.GaugeId);
+            await this._brewLogger.AddUpdateLog($"Updated gauge {gauge.Name} value: {gaugeValue.Value}");
 
             return gaugeValue;
         }

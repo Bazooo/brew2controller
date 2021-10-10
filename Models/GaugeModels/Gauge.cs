@@ -38,7 +38,7 @@ namespace CSharpMongoGraphqlSubscriptions.Models.GaugeModels
             var gaugeValues = await database
                 .GetGaugeValuesCollection()
                 .Find(filter)
-                .SortBy(bson => bson.Id)
+                .SortByDescending(bson => bson.Id)
                 .ToListAsync();
 
             return gaugeValues ?? new List<GaugeValue>();

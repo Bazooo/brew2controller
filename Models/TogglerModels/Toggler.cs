@@ -36,7 +36,7 @@ namespace CSharpMongoGraphqlSubscriptions.Models.TogglerModels
             var togglerValues = await database
                 .GetTogglerValuesCollection()
                 .Find(filter)
-                .SortBy(bson => bson.Id)
+                .SortByDescending(bson => bson.Id)
                 .ToListAsync();
 
             return togglerValues ?? new List<TogglerValue>();

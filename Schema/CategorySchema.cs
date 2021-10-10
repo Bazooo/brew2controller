@@ -31,6 +31,8 @@ namespace CSharpMongoGraphqlSubscriptions.Schema
         {
             var category = new Category(newCategory);
             await this._database.GetCategoriesCollection().InsertOneAsync(category);
+            await this._brewLogger.AddUpdateLog($"New category added: {category.Name}");
+
             return category;
         }
 
@@ -38,10 +40,12 @@ namespace CSharpMongoGraphqlSubscriptions.Schema
         {
             var category = new Category(updatedCategory);
             await this._database.GetCategoriesCollection().UpdateItemAsync(category);
+            await this._brewLogger.AddUpdateLog($"Category updated: {category.Name}");
+
             return category;
         }
 
-        public async Task<OperationResult> DeleteCategory(string categoryId)
-            => await this._database.GetCategoriesCollection().DeleteItemAsync(categoryId);
+        public async Task<OperationResult> DeleteCategory(string categoryId) =>
+            await this._database.GetCategoriesCollection().DeleteItemAsync(categoryId);
     }
 }

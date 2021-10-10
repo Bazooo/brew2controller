@@ -32,6 +32,8 @@ namespace CSharpMongoGraphqlSubscriptions.Schema
         {
             var gauge = new Gauge(newGauge);
             await this._database.GetGaugesCollection().InsertOneAsync(gauge);
+            await this._brewLogger.AddUpdateLog($"New gauge added: {gauge.Name}");
+
             return gauge;
         }
 
@@ -39,6 +41,8 @@ namespace CSharpMongoGraphqlSubscriptions.Schema
         {
             var gauge = new Gauge(updatedGauge);
             await this._database.GetGaugesCollection().UpdateItemAsync(gauge);
+            await this._brewLogger.AddUpdateLog($"Gauge updated: {gauge.Name}");
+
             return gauge;
         }
 

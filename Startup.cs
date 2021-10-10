@@ -1,5 +1,6 @@
 using System;
 using CSharpMongoGraphqlSubscriptions.Schema;
+using CSharpMongoGraphqlSubscriptions.Utilities;
 using HotChocolate.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -16,6 +17,7 @@ namespace CSharpMongoGraphqlSubscriptions
         public void ConfigureServices(IServiceCollection services)
         {
             services
+                .AddSingleton<BrewLogger>()
                 .AddInMemorySubscriptions()
                 .AddRedisSubscriptions(_ => ConnectionMultiplexer.Connect("localhost:6379"));
 

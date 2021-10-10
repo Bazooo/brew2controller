@@ -32,6 +32,8 @@ namespace CSharpMongoGraphqlSubscriptions.Schema
         {
             var subcategory = new Subcategory(newSubcategory);
             await this._database.GetSubcategoriesCollection().InsertOneAsync(subcategory);
+            await this._brewLogger.AddUpdateLog($"New subcategory added: {subcategory.Name}");
+
             return subcategory;
         }
 
@@ -39,6 +41,8 @@ namespace CSharpMongoGraphqlSubscriptions.Schema
         {
             var subcategory = new Subcategory(updatedSubcategory);
             await this._database.GetSubcategoriesCollection().UpdateItemAsync(subcategory);
+            await this._brewLogger.AddUpdateLog($"Subcategory updated: {subcategory.Name}");
+
             return subcategory;
         }
 
