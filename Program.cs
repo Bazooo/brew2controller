@@ -1,4 +1,6 @@
+using CSharpMongoGraphqlSubscriptions.OpcUA;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace CSharpMongoGraphqlSubscriptions
@@ -12,6 +14,10 @@ namespace CSharpMongoGraphqlSubscriptions
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                })
+                .ConfigureServices(services =>
+                {
+                    services.AddHostedService<BrewListener>();
                 });
     }
 }

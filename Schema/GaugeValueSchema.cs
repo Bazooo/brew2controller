@@ -20,6 +20,8 @@ namespace CSharpMongoGraphqlSubscriptions.Schema
 
             var topic = $"{gaugeId}_{nameof(Subscription.GetLatestGaugeValue)}";
 
+            // todo: send shit to plc
+
             await this._database.GetGaugeValuesCollection().InsertOneAsync(gaugeValue);
             await this._sender.SendAsync(topic, gaugeValue);
             var gauge = await this._database.GetGaugesCollection().FindItemAsync(gaugeValue.GaugeId);
