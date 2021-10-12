@@ -1,4 +1,5 @@
 using System;
+using CSharpMongoGraphqlSubscriptions.OpcUA;
 using CSharpMongoGraphqlSubscriptions.Schema;
 using CSharpMongoGraphqlSubscriptions.Utilities;
 using HotChocolate.AspNetCore;
@@ -17,6 +18,8 @@ namespace CSharpMongoGraphqlSubscriptions
         public void ConfigureServices(IServiceCollection services)
         {
             services
+                .AddCors()
+                .AddSingleton<BrewClient>()
                 .AddSingleton<BrewLogger>()
                 .AddInMemorySubscriptions()
                 .AddRedisSubscriptions(_ => ConnectionMultiplexer.Connect("localhost:6379"));
@@ -51,6 +54,7 @@ namespace CSharpMongoGraphqlSubscriptions
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env) =>
             app
+                .UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod())
                 .UseRouting()
                 .UseWebSockets()
                 .UseEndpoints(endpoints =>
