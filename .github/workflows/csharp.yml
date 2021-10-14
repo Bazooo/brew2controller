@@ -25,13 +25,14 @@ jobs:
 
           dockerRunArgs: |
             --volume "${PWD}/artifacts:/artifacts"
+            --volume "${PWD}/automation:/automation"
 
           shell: /bin/sh
 
           install: |
             apk update
             apk add bash icu-libs krb5-libs libgcc libintl libssl1.1 libstdc++ zlib
-            bash ./automation/dotnet-install.sh -c 5.0
+            bash /automation/dotnet-install.sh -c 5.0
 
           run: |
             dotnet publish ./CSharpMongoGraphqlSubscriptions.csproj -c Release -o /artifacts
