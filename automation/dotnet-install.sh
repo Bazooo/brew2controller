@@ -649,7 +649,7 @@ get_specific_product_version() {
             fi
         fi
     done
-    
+
     # Getting the version number with productVersion.txt has failed. Try parsing the download link for a version number.
     say_verbose "Failed to get the version using productVersion.txt file. Download link will be parsed instead."
     specific_product_version="$(get_product_specific_version_from_download_link "$package_download_link" "$specific_version")"
@@ -714,7 +714,7 @@ get_product_specific_version_from_download_link()
 
     local download_link="$1"
     local specific_version="$2"
-    local specific_product_version="" 
+    local specific_product_version=""
 
     if [ -z "$download_link" ]; then
         echo "$specific_version"
@@ -1037,7 +1037,7 @@ downloadwget() {
     return 0
 }
 
-get_download_link_from_aka_ms() {    
+get_download_link_from_aka_ms() {
     eval $invocation
 
     #quality is not supported for LTS or current channel
@@ -1046,7 +1046,7 @@ get_download_link_from_aka_ms() {
         say_warning "Specifying quality for current or LTS channel is not supported, the quality will be ignored."
     fi
 
-    say_verbose "Retrieving primary payload URL from aka.ms for channel: '$normalized_channel', quality: '$normalized_quality', product: '$normalized_product', os: '$normalized_os', architecture: '$normalized_architecture'." 
+    say_verbose "Retrieving primary payload URL from aka.ms for channel: '$normalized_channel', quality: '$normalized_quality', product: '$normalized_product', os: '$normalized_os', architecture: '$normalized_architecture'."
 
     #construct aka.ms link
     aka_ms_link="https://aka.ms/dotnet"
@@ -1113,7 +1113,7 @@ calculate_vars() {
 
             valid_aka_ms_link=true;
             get_download_link_from_aka_ms || valid_aka_ms_link=false
-            
+
             if [ "$valid_aka_ms_link" == false ]; then
                 # if quality is specified - exit with error - there is no fallback approach
                 if [ ! -z "$normalized_quality" ]; then
@@ -1140,10 +1140,10 @@ calculate_vars() {
                 #Retrieve product specific version
                 specific_product_version="$(get_specific_product_version "$azure_feed" "$specific_version" "$download_link")"
                 say_verbose "Product specific version: '$specific_product_version'."
-  
+
                 install_root="$(resolve_installation_path "$install_dir")"
                 say_verbose "InstallRoot: '$install_root'."
-                return 
+                return
             fi
     fi
 
@@ -1444,9 +1444,9 @@ do
             echo "  -q,--quality <quality>         Download the latest build of specified quality in the channel."
             echo "      -Quality"
             echo "          The possible values are: daily, signed, validated, preview, GA."
-            echo "          Works only in combination with channel. Not applicable for current and LTS channels and will be ignored if those channels are used." 
-            echo "          For SDK use channel in A.B.Cxx format. Using quality for SDK together with channel in A.B format is not supported." 
-            echo "          Supported since 5.0 release." 
+            echo "          Works only in combination with channel. Not applicable for current and LTS channels and will be ignored if those channels are used."
+            echo "          For SDK use channel in A.B.Cxx format. Using quality for SDK together with channel in A.B format is not supported."
+            echo "          Supported since 5.0 release."
             echo "          Note: The version parameter overrides the channel parameter when any version other than `latest` is used, and therefore overrides the quality."
             echo "  --internal,-Internal               Download internal builds. Requires providing credentials via --feed-credential parameter."
             echo "  --feed-credential <FEEDCREDENTIAL> Token to access Azure feed. Used as a query string to append to the Azure feed."
@@ -1532,7 +1532,7 @@ if [ "$dry_run" = true ]; then
         say "Legacy named payload URL: ${legacy_download_link}"
     fi
     repeatable_command="./$script_name --version "\""$specific_version"\"" --install-dir "\""$install_root"\"" --architecture "\""$normalized_architecture"\"" --os "\""$normalized_os"\"""
-    
+
     if [ ! -z "$normalized_quality" ]; then
         repeatable_command+=" --quality "\""$normalized_quality"\"""
     fi
@@ -1556,6 +1556,7 @@ fi
 install_dotnet
 
 bin_path="$(get_absolute_path "$(combine_paths "$install_root" "$bin_folder_relative_path")")"
+ls $bin_path
 if [ "$no_path" = false ]; then
     say "Adding to current process PATH: \`$bin_path\`. Note: This change will be visible only when sourcing script."
     export PATH="$bin_path":"$PATH"
