@@ -26,12 +26,12 @@ jobs:
           shell: /bin/sh
 
           install: |
-            ls /workspace
             apk update
             apk add bash icu-libs krb5-libs libgcc libintl libssl1.1 libstdc++ zlib
-            bash /workspace/automation/dotnet-install.sh -c 5.0
 
           run: |
+            ls /workspace
+            bash /workspace/automation/dotnet-install.sh -c 5.0
             dotnet publish /workspace/CSharpMongoGraphqlSubscriptions.csproj -c Release -o /workspace/artifacts
 
       - name: Publish artifacts
