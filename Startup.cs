@@ -6,23 +6,26 @@ using HotChocolate.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using MongoDB.Bson;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
-using MongoDB.Driver.Core.Events;
 using StackExchange.Redis;
 
 namespace CSharpMongoGraphqlSubscriptions
 {
     public class Startup
     {
-        public void ConfigureServices(IServiceCollection services)
+        public static void ConfigureServices(IServiceCollection services)
         {
+            var mongodbConnectionString = Environment.GetEnvironmentVariable("BREW_DB_URI") ?? "mongodb://root:pass@localhost";
+            var redisUri = Environment.GetEnvironmentVariable("REDIS_URI") ?? "localhost:6379";
+
             services
                 .AddCors()
                 .AddSingleton<BrewClient>()
                 .AddSingleton<BrewLogger>()
                 .AddInMemorySubscriptions()
-                .AddRedisSubscriptions(_ => ConnectionMultiplexer.Connect("localhost:6379"));
+                .AddRedisSubscriptions(_ => ConnectionMultiplexer.Connect(redisUri));
 
             services
                 .AddGraphQLServer()
@@ -32,17 +35,8 @@ namespace CSharpMongoGraphqlSubscriptions
 
             // setup the database
 
-            const string connectionString = "mongodb://root:pass@localhost";
-            var mongoConnectionUrl = new MongoUrl(connectionString);
+            var mongoConnectionUrl = new MongoUrl(mongodbConnectionString);
             var mongoClientSettings = MongoClientSettings.FromUrl(mongoConnectionUrl);
-            mongoClientSettings.ClusterConfigurator = cb =>
-            {
-                // This will print the executed command to the console
-                cb.Subscribe<CommandStartedEvent>(e =>
-                {
-                    Console.WriteLine($"{e.CommandName} - {e.Command.ToJson()}");
-                });
-            };
 
             services.AddSingleton(_ =>
             {
@@ -52,20 +46,35 @@ namespace CSharpMongoGraphqlSubscriptions
             });
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) =>
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
             app
-                .UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod())
                 .UseRouting()
                 .UseWebSockets()
                 .UseEndpoints(endpoints =>
                 {
-                    endpoints.MapGraphQL().WithOptions(new GraphQLServerOptions
-                    {
-                        Tool =
+                    endpoints.MapGraphQL()
+                        .WithOptions(new GraphQLServerOptions { Tool =
                         {
+                            Enable = env.IsDevelopment(),
                             DisableTelemetry = true,
-                        },
-                    });
+                        }, });
                 });
+
+            if (env.IsDevelopment())
+            {
+                app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            }
+
+            if (env.IsProduction())
+            {
+                app
+                    .UseFileServer(new FileServerOptions
+                    {
+                        FileProvider = new PhysicalFileProvider(Environment.GetEnvironmentVariable("BREW_APP_DIRECTORY")),
+                        RequestPath = "",
+                    });
+            }
+        }
     }
 }

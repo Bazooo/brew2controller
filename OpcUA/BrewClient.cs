@@ -11,12 +11,11 @@ namespace CSharpMongoGraphqlSubscriptions.OpcUA
         private readonly ITopicEventSender _sender;
 
         public BrewClient(IMongoDatabase database, ITopicEventSender sender)
-            : base("opc.tcp://Win10-Bazoo.mshome.net:53530/OPCUA/SimulationServer")
+            : base(Environment.GetEnvironmentVariable("BREW_OPCUA_SERVER_ADDRESS"))
         {
             this._database = database;
             this._sender = sender;
             this.Connect();
-            Console.WriteLine("test");
         }
     }
 }
