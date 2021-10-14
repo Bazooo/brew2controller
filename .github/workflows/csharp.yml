@@ -34,10 +34,12 @@ jobs:
             bash /workspace/automation/dotnet-install.sh -c 5.0
             /root/.dotnet/dotnet publish /workspace/CSharpMongoGraphqlSubscriptions.csproj -c Release -o /workspace/artifacts
 
-      - name: Publish artifacts
-        uses: montudor/action-zip@v1
+      - name: Prepare artifacts
+        uses: thedoctor0/zip-release@master
         with:
-          args: zip -qq -r ${{ github.workspace }}/artifacts.zip ${{ github.workspace }}/artifacts
-      - uses: actions/upload-artifact@v2
+          path: ${{ github.workspace }}/artifacts
+          filename: ${{ github.workspace }}/artifacts.zip
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
         with:
           name: ${{ github.workspace }}/artifacts.zip
