@@ -11,9 +11,6 @@ jobs:
     name: Build on aarch64
     steps:
       - uses: actions/checkout@v2.3.4
-        with:
-          run: |
-            ls -al "${PWD}"
       - uses: uraimo/run-on-arch-action@v2.1.1
         name: Build artifacts
         id: build
@@ -28,17 +25,17 @@ jobs:
 
           dockerRunArgs: |
             --volume "${PWD}/artifacts:/artifacts"
-            --volume "${PWD}/automation:/automation"
+            --volume "${GITHUB_WORKSPACE}:/workspace"
 
           shell: /bin/sh
 
           install: |
             apk update
             apk add bash icu-libs krb5-libs libgcc libintl libssl1.1 libstdc++ zlib
-            bash /automation/dotnet-install.sh -c 5.0
+            bash /workspace/automation/dotnet-install.sh -c 5.0
 
           run: |
-            dotnet publish ./CSharpMongoGraphqlSubscriptions.csproj -c Release -o /artifacts
+            dotnet publish /workspace/CSharpMongoGraphqlSubscriptions.csproj -c Release -o /artifacts
 
       - name: Publish artifacts
         uses: montudor/action-zip@v1
