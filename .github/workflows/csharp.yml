@@ -11,6 +11,8 @@ jobs:
     name: Build on aarch64
     steps:
       - uses: actions/checkout@v2.3.4
+        run: |
+          ls -al "${PWD}"
       - uses: uraimo/run-on-arch-action@v2.1.1
         name: Build artifacts
         id: build
@@ -40,7 +42,7 @@ jobs:
       - name: Publish artifacts
         uses: montudor/action-zip@v1
         with:
-          args: zip -qq -r artifacts.zip ./artifacts
+          args: zip -qq -r ${PWD}/artifacts.zip ${PWD}/artifacts
       - uses: actions/upload-artifact@v2
         with:
-          name: artifacts.zip
+          name: ${PWD}/artifacts.zip
