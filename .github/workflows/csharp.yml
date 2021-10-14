@@ -22,11 +22,10 @@ jobs:
 
           setup: |
             mkdir -p "${PWD}/artifacts"
-            ls ${GITHUB_WORKSPACE}
 
           dockerRunArgs: |
-            --volume ${PWD}/artifacts:/artifacts
-            --volume ${GITHUB_WORKSPACE}:/workspace
+            -v ${PWD}/artifacts:/artifacts
+            -v ${GITHUB_WORKSPACE}:/workspace
 
           shell: /bin/sh
 
