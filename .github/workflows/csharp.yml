@@ -20,12 +20,8 @@ jobs:
 
           githubToken: ${{ github.token }}
 
-          setup: |
-            mkdir -p "${PWD}/artifacts"
-
           dockerRunArgs: |
-            -v ${PWD}/artifacts:/artifacts
-            -v ${GITHUB_WORKSPACE}:/workspace
+            -v ${{ github.workspace }}:/workspace
 
           shell: /bin/sh
 
@@ -36,12 +32,12 @@ jobs:
             bash /workspace/automation/dotnet-install.sh -c 5.0
 
           run: |
-            dotnet publish /workspace/CSharpMongoGraphqlSubscriptions.csproj -c Release -o /artifacts
+            dotnet publish /workspace/CSharpMongoGraphqlSubscriptions.csproj -c Release -o /workspace/artifacts
 
       - name: Publish artifacts
         uses: montudor/action-zip@v1
         with:
-          args: zip -qq -r ${PWD}/artifacts.zip ${PWD}/artifacts
+          args: zip -qq -r ${PWD}/artifacts.zip ${GITHUB_WORKSPACE}/artifacts
       - uses: actions/upload-artifact@v2
         with:
           name: ${PWD}/artifacts.zip
