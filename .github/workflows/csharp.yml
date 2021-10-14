@@ -22,24 +22,22 @@ jobs:
 
           setup: |
             mkdir -p "${PWD}/artifacts"
+            ls ${GITHUB_WORKSPACE}
 
           dockerRunArgs: |
-            --volume "${PWD}/artifacts:/artifacts" --volume "${GITHUB_WORKSPACE}:/workspace"
+            --volume ${PWD}/artifacts:/artifacts
+            --volume ${GITHUB_WORKSPACE}:/workspace
 
           shell: /bin/sh
 
           install: |
             ls /workspace
-
-          # apk update
-          # apk add bash icu-libs krb5-libs libgcc libintl libssl1.1 libstdc++ zlib
-          # bash /workspace/automation/dotnet-install.sh -c 5.0
+            apk update
+            apk add bash icu-libs krb5-libs libgcc libintl libssl1.1 libstdc++ zlib
+            bash /workspace/automation/dotnet-install.sh -c 5.0
 
           run: |
-            ls /workspace
-
-          # run: |
-          #   dotnet publish /workspace/CSharpMongoGraphqlSubscriptions.csproj -c Release -o /artifacts
+            dotnet publish /workspace/CSharpMongoGraphqlSubscriptions.csproj -c Release -o /artifacts
 
       - name: Publish artifacts
         uses: montudor/action-zip@v1
