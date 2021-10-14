@@ -37,7 +37,7 @@ jobs:
       - name: Publish artifacts
         uses: montudor/action-zip@v1
         with:
-          args: zip -qq -r ${PWD}/artifacts.zip ${GITHUB_WORKSPACE}/artifacts
+          args: zip -qq -r ${PWD}/artifacts.zip ${{ github.workspace }}/artifacts
       - uses: actions/upload-artifact@v2
         with:
           name: ${PWD}/artifacts.zip
