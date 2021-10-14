@@ -21,7 +21,7 @@ jobs:
           githubToken: ${{ github.token }}
 
           dockerRunArgs: |
-            -v ${{ github.workspace }}:/workspace
+            --volume "${{ github.workspace }}:/workspace"
 
           shell: /bin/sh
 
