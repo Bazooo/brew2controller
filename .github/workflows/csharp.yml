@@ -32,7 +32,7 @@ jobs:
 
           run: |
             bash /workspace/automation/dotnet-install.sh -c 5.0
-            /usr/bin/dotnet publish /workspace/CSharpMongoGraphqlSubscriptions.csproj -c Release -o /workspace/artifacts
+            /root/.dotnet/dotnet publish /workspace/CSharpMongoGraphqlSubscriptions.csproj -c Release -o /workspace/artifacts
 
       - name: Publish artifacts
         uses: montudor/action-zip@v1
