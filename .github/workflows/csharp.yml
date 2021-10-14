@@ -40,6 +40,6 @@ jobs:
         uses: montudor/action-zip@v1
         with:
           args: zip -qq -r artifacts.zip ./artifacts
-        uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v2
         with:
           name: artifacts.zip
