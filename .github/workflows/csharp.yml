@@ -27,10 +27,10 @@ jobs:
 
           install: |
             apk update
-            apk add bash icu-libs krb5-libs libgcc libintl libssl1.1 libstdc++ zlib
+            apk add bash icu-libs krb5-libs libgcc libintl libssl1.1 libstdc++ zlib wget ca-certificates
+            update-ca-certificates
 
           run: |
-            ls /workspace
             bash /workspace/automation/dotnet-install.sh -c 5.0
             dotnet publish /workspace/CSharpMongoGraphqlSubscriptions.csproj -c Release -o /workspace/artifacts
 
