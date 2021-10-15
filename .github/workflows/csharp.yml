@@ -30,7 +30,7 @@ jobs:
             apk add bash icu-libs krb5-libs libgcc libintl libssl1.1 libstdc++ zlib wget ca-certificates
             update-ca-certificates
             wget -O ./dotnet-install.sh https://dot.net/v1/dotnet-install.sh
-            ./dotnet-install.sh -c 5.0
+            bash ./dotnet-install.sh -c 5.0
 
           run: |
             /root/.dotnet/dotnet publish /workspace/CSharpMongoGraphqlSubscriptions.csproj -c Release -o /workspace/artifacts
