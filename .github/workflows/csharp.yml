@@ -35,14 +35,8 @@ jobs:
           run: |
             /root/.dotnet/dotnet publish /workspace/CSharpMongoGraphqlSubscriptions.csproj -c Release -o /workspace/artifacts
 
-      - name: Prepare artifacts
-        uses: thedoctor0/zip-release@master
-        with:
-          path: ${{ github.workspace }}/artifacts
-          directory: ${{ github.workspace }}
-          filename: ${{ github.workspace }}/artifacts.zip
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
           name: artifact
-          path: ${{ github.workspace }}/artifacts.zip
+          path: ${{ github.workspace }}/artifacts
