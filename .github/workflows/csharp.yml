@@ -29,9 +29,10 @@ jobs:
             apk update
             apk add bash icu-libs krb5-libs libgcc libintl libssl1.1 libstdc++ zlib wget ca-certificates
             update-ca-certificates
+            wget -O ./dotnet-install.sh https://dot.net/v1/dotnet-install.sh
+            ./dotnet-install.sh -c 5.0
 
           run: |
-            bash /workspace/automation/dotnet-install.sh -c 5.0
             /root/.dotnet/dotnet publish /workspace/CSharpMongoGraphqlSubscriptions.csproj -c Release -o /workspace/artifacts
 
       - name: Prepare artifacts
