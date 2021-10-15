@@ -39,7 +39,7 @@ jobs:
         with:
           path: ${{ github.workspace }}/artifacts
           directory: ${{ github.workspace }}
-          filename: ${{ github.workspace }/artifacts.zip
+          filename: ${{ github.workspace }}/artifacts.zip
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
