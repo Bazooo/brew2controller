@@ -15,12 +15,12 @@ jobs:
         id: build
         run: |
           wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-          dpkg -i packages-microsoft-prod.deb
+          sudo dpkg -i packages-microsoft-prod.deb
           rm packages-microsoft-prod.deb
-          apt-get update
-          apt-get install -y apt-transport-https
-          apt-get update
-          apt-get install -y dotnet-sdk-5.0
+          sudo apt-get update
+          sudo apt-get install -y apt-transport-https
+          sudo apt-get update
+          sudo apt-get install -y dotnet-sdk-5.0
           dotnet publish ${{ github.workspace }}/CSharpMongoGraphqlSubscriptions.csproj -c Release -r linux-arm64 -o ${{ github.workspace }}/artifacts --self-contained true
 
       - name: Upload artifacts
