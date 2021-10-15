@@ -7,36 +7,24 @@ on:
 
 jobs:
   build_job:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     name: Build on aarch64
     steps:
       - uses: actions/checkout@v2.3.4
-      - uses: uraimo/run-on-arch-action@v2.1.1
-        name: Build artifacts
+      - name: Build artifacts
         id: build
-        with:
-          arch: aarch64
-          distro: alpine_latest
-
-          githubToken: ${{ github.token }}
-
-          dockerRunArgs: |
-            --volume "${{ github.workspace }}:/workspace"
-
-          shell: /bin/sh
-
-          install: |
-            apk update
-            apk add bash icu-libs krb5-libs libgcc libintl libssl1.1 libstdc++ zlib wget ca-certificates
-            update-ca-certificates
-            wget -O ./dotnet-install.sh https://dot.net/v1/dotnet-install.sh
-            bash ./dotnet-install.sh -c 5.0
-
-          run: |
-            /root/.dotnet/dotnet publish /workspace/CSharpMongoGraphqlSubscriptions.csproj -c Release -o /workspace/artifacts
+        run: |
+          wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+          dpkg -i packages-microsoft-prod.deb
+          rm packages-microsoft-prod.deb
+          apt-get update
+          apt-get install -y apt-transport-https
+          apt-get update
+          apt-get install -y dotnet-sdk-5.0
+          dotnet publish ${{ github.workspace }}/CSharpMongoGraphqlSubscriptions.csproj -c Release -r linux-arm64 -o ${{ github.workspace }}/artifacts --self-contained true
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: artifact
+          name: aarch64-build
           path: ${{ github.workspace }}/artifacts
