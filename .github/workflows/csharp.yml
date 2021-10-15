@@ -38,7 +38,8 @@ jobs:
         uses: thedoctor0/zip-release@master
         with:
           path: ${{ github.workspace }}/artifacts
-          filename: ${{ github.workspace }}/artifacts.zip
+          directory: ${{ github.workspace }}
+          filename: ${{ github.workspace }/artifacts.zip
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
