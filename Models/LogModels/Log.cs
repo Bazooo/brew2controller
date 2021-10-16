@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using MongoDB.Bson;
 
 namespace CSharpMongoGraphqlSubscriptions.Models.LogModels
@@ -20,10 +21,10 @@ namespace CSharpMongoGraphqlSubscriptions.Models.LogModels
         }
 
         public string GetDate()
-            => this.GetCreatedAt().ToString("yyyy/MM/dd");
+            => this.GetCreatedAt().ToString("yyyy/MM/dd", CultureInfo.CreateSpecificCulture("en-GB"));
 
         public string GetTime()
-            => this.GetCreatedAt().ToString("T");
+            => this.GetCreatedAt().ToString("T", CultureInfo.CreateSpecificCulture("en-GB"));
     }
 
     public enum LogType
