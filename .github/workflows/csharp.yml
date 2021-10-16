@@ -21,8 +21,8 @@ jobs:
           rm packages-microsoft-prod.deb
           sudo apt-get update
           sudo apt-get install -y apt-transport-https tar dotnet-sdk-5.0
-          dotnet publish ${{ github.workspace }}/CSharpMongoGraphqlSubscriptions.csproj -c Release -r linux-arm64 -o ${{ github.workspace }}/artifacts --self-contained true
-          tar -czvf ${{ github.workspace }}/brewcontroller.tar.gz -C ${{ github.workspace }}/artifacts .
+          dotnet publish ${{ github.workspace }}/CSharpMongoGraphqlSubscriptions.csproj -c Release -r linux-arm64 -o ${{ github.workspace }}/brewcontroller-${{ env.RELEASE_VERSION }} --self-contained true
+          tar -czvf ${{ github.workspace }}/brewcontroller.tar.gz -C ${{ github.workspace }} brewcontroller-${{ env.RELEASE_VERSION }}
 
       - name: Upload release artifacts
         uses: softprops/action-gh-release@v1
