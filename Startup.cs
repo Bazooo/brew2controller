@@ -51,6 +51,15 @@ namespace CSharpMongoGraphqlSubscriptions
             app
                 .UseRouting()
                 .UseWebSockets()
+                .UseCors(builder =>
+                {
+                    if (env.IsDevelopment())
+                    {
+                        builder.AllowAnyOrigin()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    }
+                })
                 .UseEndpoints(endpoints =>
                 {
                     endpoints.MapGraphQL()
@@ -60,11 +69,6 @@ namespace CSharpMongoGraphqlSubscriptions
                             DisableTelemetry = true,
                         }, });
                 });
-
-            if (env.IsDevelopment())
-            {
-                app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
-            }
 
             if (env.IsProduction())
             {

@@ -18,6 +18,12 @@ namespace CSharpMongoGraphqlSubscriptions.Models.LogModels
 
             return objectId.CreationTime;
         }
+
+        public string GetDate()
+            => this.GetCreatedAt().ToString("yyyy/MM/dd");
+
+        public string GetTime()
+            => this.GetCreatedAt().ToString("T");
     }
 
     public enum LogType
