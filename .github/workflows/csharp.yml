@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2.3.4
 
-      - name: Set environment variables
+      - name: Setup environment variables
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
       - name: Setup dotnet
@@ -24,13 +24,10 @@ jobs:
           dotnet-version: '5.x'
 
       - name: Publish artifacts
-        run: |
-          dotnet publish ${{ github.workspace }}/CSharpMongoGraphqlSubscriptions.csproj -c Release -r linux-arm64 -o ${{ github.workspace }}/brewcontroller-${{ env.RELEASE_VERSION }} --self-contained true
+        run: dotnet publish ${{ github.workspace }}/CSharpMongoGraphqlSubscriptions.csproj -c Release -r linux-arm64 -o ${{ github.workspace }}/brewcontroller-${{ env.RELEASE_VERSION }} --self-contained true
 
       - name: Archive artifacts
-        run: |
-          sudo apt-get install -y tar
-          tar -czvf ${{ github.workspace }}/brewcontroller.tar.gz -C ${{ github.workspace }} brewcontroller-${{ env.RELEASE_VERSION }}
+        run: tar -czvf ${{ github.workspace }}/brewcontroller.tar.gz -C ${{ github.workspace }} brewcontroller-${{ env.RELEASE_VERSION }}
 
       - name: Upload release artifacts
         uses: softprops/action-gh-release@v1
