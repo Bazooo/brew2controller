@@ -15,6 +15,14 @@ jobs:
       - name: Setup environment variables
         run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
 
+      - name: Cache project dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
       - name: Publish artifacts
         run: dotnet publish ${{ github.workspace }}/CSharpMongoGraphqlSubscriptions.csproj -c Release -r linux-arm64 -o ${{ github.workspace }}/brewcontroller-${{ env.RELEASE_VERSION }} --self-contained true
 
