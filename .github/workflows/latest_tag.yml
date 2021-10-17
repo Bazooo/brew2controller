@@ -1,0 +1,23 @@
+﻿# hacks for circumvent caching on tags (https://github.com/actions/cache/issues/556)
+
+name: Trigger jobs on tag
+
+on:
+  push:
+    tags:
+      - v[0-9]+.[0-9]+.*
+
+jobs:
+  latest_tag_job:
+    runs-on: ubuntu-20.04
+    name: Tag latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Create tag
+        run: |
+          git tag -a latest
+          git push origin latest
+
+      - name: Delete tag
+        run: git push --delete origin latest
