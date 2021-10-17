@@ -1,0 +1,34 @@
+﻿# hacks for circumvent caching on tags (https://github.com/actions/cache/issues/556)
+
+name: Update the caches
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+  update-cache:
+    runs-on: ubuntu-20.04
+    name: Tag latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache backend .NET dependencies
+        uses: actions/cache@v2
+        id: nuget_cache
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Restore .NET projects
+        # No need to install if hit, we are not building
+        if: steps.nuget_cache.outputs.cache-hit != 'true'
+        run: dotnet publish ${{ github.workspace }}/CSharpMongoGraphqlSubscriptions.csproj -r linux-arm64 --self-contained true
