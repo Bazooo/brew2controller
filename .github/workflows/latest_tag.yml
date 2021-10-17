@@ -20,6 +20,3 @@ jobs:
           git config user.email "${{ github.actor }}@users.noreply.github.com"
           git tag latest
           git push origin latest
-
-      - name: Delete tag
-        run: git push --delete origin latest
