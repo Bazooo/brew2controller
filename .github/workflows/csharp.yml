@@ -3,7 +3,12 @@ name: Build C# Backend
 on:
   push:
     tags:
-      - latest
+      - 'latest'
+
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
 
 jobs:
   build_job:
